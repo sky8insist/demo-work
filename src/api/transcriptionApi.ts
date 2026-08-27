@@ -1,0 +1,4 @@
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/$/, "");
+const USE_REMOTE_API = import.meta.env.VITE_USE_REMOTE_API === "true";
+export async function transcribeAudio(audio: Blob, mode: "closure" | "emotion"): Promise<string> { if (!USE_REMOTE_API) return mockTranscript(mode); const form = new FormData(); form.append("audio", audio, `last30-${mode}.webm`); form.append("mode", mode); const response = await fetch(`${API_URL}/api/transcribe`, { method: "POST", body: form }); if (!response.ok) throw new Error(`Transcription API returned ${response.status}`); const payload = await response.json() as { transcript?: string }; if (!payload.transcript) throw new Error("Transcription was empty"); return payload.transcript; }
+export function mockTranscript(mode: "closure" | "emotion") { return mode === "closure" ? "今天首页已经写完了\n登录还有问题\n在等产品给最终文案\n老师邮件还没回\n明早交周报" : "项目推进得不太顺，和同学沟通也有点累。明天的事情都挤在一起，我一直在想时间够不够。"; }

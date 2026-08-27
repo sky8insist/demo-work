@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Mic, Square } from "lucide-react";
+import { mockTranscript, transcribeAudio } from "./api/transcriptionApi";
 export default function VoiceCapture({
   mode,
   onTranscript,
@@ -9,9 +10,11 @@ export default function VoiceCapture({
 }) {
   const [recording, setRecording] = useState(false),
     [error, setError] = useState(""),
-    [seconds, setSeconds] = useState(0);
+    [seconds, setSeconds] = useState(0),
+    [processing, setProcessing] = useState(false);
   const recorder = useRef<MediaRecorder | null>(null),
-    stream = useRef<MediaStream | null>(null);
+    stream = useRef<MediaStream | null>(null),
+    chunks = useRef<Blob[]>([]);
   useEffect(() => {
     if (!recording) return;
     const id = setInterval(() => setSeconds((v) => v + 1), 1000);
@@ -32,6 +35,20 @@ export default function VoiceCapture({
         audio: true,
       });
       recorder.current = new MediaRecorder(stream.current);
+      chunks.current = [];
+      recorder.current.ondataavailable = (event) => event.data.size && chunks.current.push(event.data);
+      recorder.current.onstop = async () => {
+        setProcessing(true);
+        try {
+          const blob = new Blob(chunks.current, { type: recorder.current?.mimeType || "audio/webm" });
+          onTranscript(await transcribeAudio(blob, mode));
+        } catch {
+          onTranscript(mockTranscript(mode));
+        } finally {
+          chunks.current = [];
+          setProcessing(false);
+        }
+      };
       recorder.current.start();
       setSeconds(0);
       setRecording(true);
@@ -43,15 +60,12 @@ export default function VoiceCapture({
     recorder.current?.stop();
     stream.current?.getTracks().forEach((track) => track.stop());
     setRecording(false);
-    onTranscript(
-      mode === "closure"
-        ? "今天首页已经写完了\n登录还有问题\n在等产品给最终文案\n老师邮件还没回\n明早交周报"
-        : "项目推进得不太顺，和同学沟通也有点累。明天的事情都挤在一起，我一直在想时间够不够。",
-    );
   };
   return (
     <div className={`voice-capture ${recording ? "is-recording" : ""}`}>
-      {recording ? (
+      {processing ? (
+        <p className="voice-processing" role="status">正在生成模拟转写…</p>
+      ) : recording ? (
         <>
           <div className="wave" aria-hidden="true">
             {Array.from({ length: 18 }, (_, i) => (
@@ -70,9 +84,10 @@ export default function VoiceCapture({
           </button>
         </>
       ) : (
-        <button className="voice-start" onClick={start}>
-          <Mic /> 用语音说
-        </button>
+        <div className="voice-actions">
+          <button className="voice-start" onClick={start}><Mic /> 用语音说</button>
+          <button className="voice-demo" onClick={() => onTranscript(mockTranscript(mode))}>模拟一段语音</button>
+        </div>
       )}
       {error && (
         <p className="field-error" role="alert">
@@ -80,7 +95,7 @@ export default function VoiceCapture({
           <button onClick={() => setError("")}>知道了</button>
         </p>
       )}
-      {!recording && <small>演示版使用示例转写，原始录音不会保存。</small>}
+      {!recording && !processing && <small>转写使用本地演示服务，原始录音不会保存。</small>}
     </div>
   );
 }

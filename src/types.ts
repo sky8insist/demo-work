@@ -45,6 +45,18 @@ export interface EmotionSummary {
   keyEvents: string[];
   repeatedConcerns: string[];
 }
+export interface ClosureRecord {
+  id: string; kind: "closure"; createdAt: string; timezone: string;
+  reminderTime: string; scheduledFor: string; status: "scheduled" | "ready" | "consumed";
+  tomorrow: OpenLoop[]; waiting: OpenLoop[];
+}
+export interface EmotionRecord {
+  id: string; kind: "emotion"; createdAt: string; revealAt?: string;
+  retention: "reveal_tomorrow" | "release_tonight"; summary: EmotionSummary | null;
+  status: "sealed" | "ready" | "released" | "consumed";
+}
+export type PersistedRecord = ClosureRecord | EmotionRecord;
+export interface MorningHandoff { closure: ClosureRecord | null; emotion: EmotionRecord | null; }
 export interface CaptureItem {
   id: string;
   text: string;
@@ -64,4 +76,5 @@ export interface AppSession {
   emotionRetention: "reveal_tomorrow" | "release_tonight" | null;
   emotionSummary: EmotionSummary | null;
   demoMorning: boolean;
+  dataNotice: string | null;
 }

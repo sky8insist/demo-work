@@ -23,10 +23,14 @@ import {
 } from "lucide-react";
 import VoiceCapture from "./VoiceCapture";
 import { analyzeClosure, summarizeEmotion } from "./mockEngine";
+import { closureApi } from "./api/closureApi";
+import { emotionApi } from "./api/emotionApi";
 import {
   clearSession,
   defaultSession,
   loadSession,
+  loadMorningHandoff,
+  nextOccurrence,
   saveRecord,
   saveSession,
 } from "./storage";
@@ -40,11 +44,29 @@ const emotionDemo =
 
 export default function App() {
   const [s, setS] = useState<AppSession>(loadSession);
+  const [busy, setBusy] = useState(false);
   const [now, setNow] = useState(Date.now());
   const [capture, setCapture] = useState("");
   const root = useRef<HTMLDivElement>(null);
   const set = (next: Partial<AppSession>) => setS((v) => ({ ...v, ...next }));
   useEffect(() => saveSession(s), [s]);
+  useEffect(() => {
+    loadMorningHandoff().then((handoff) => {
+      if (!handoff.closure && !handoff.emotion) return;
+      setS((current) => ({
+        ...current,
+        stage: "TOMORROW_DESK",
+        mode: handoff.closure ? "closure" : "emotion",
+        closure: handoff.closure ? { completed: [], tomorrow: handoff.closure.tomorrow, waiting: handoff.closure.waiting, released: [], needsChoice: [], closureMessage: "昨晚的交接已到达。" } : null,
+        emotionRetention: handoff.emotion ? "reveal_tomorrow" : null,
+        emotionSummary: handoff.emotion?.summary || null,
+        demoMorning: false,
+        dataNotice: "已读取昨晚到期的本地交接。",
+      }));
+      if ("Notification" in window && Notification.permission === "granted")
+        new Notification("Last30", { body: "昨晚留下的交接已经可以查看。" });
+    }).catch(() => set({ dataNotice: "本地记录暂时无法读取，当前流程仍可继续。" }));
+  }, []);
   useEffect(() => {
     if (s.stage !== "WIND_DOWN") return;
     const id = setInterval(() => setNow(Date.now()), 1000);
@@ -125,16 +147,13 @@ export default function App() {
     setS(defaultSession);
   };
   const goBack = () => set({ stage: "ENTRY", mode: null });
-  const analyze = () => {
+  const analyze = async () => {
+    if (busy) return;
+    setBusy(true);
     set({ stage: "CLOSURE_PROCESSING" });
-    window.setTimeout(
-      () =>
-        set({
-          closure: analyzeClosure(s.closureText),
-          stage: "CLOSURE_REVIEW",
-        }),
-      1000,
-    );
+    const closure = await closureApi.analyze(s.closureText);
+    set({ closure, stage: "CLOSURE_REVIEW" });
+    setBusy(false);
   };
   const remove = (
     group: "completed" | "tomorrow" | "waiting" | "released" | "needsChoice",
@@ -158,21 +177,50 @@ export default function App() {
       },
     });
   const commitClosure = async () => {
+    if (busy) return;
+    setBusy(true);
+    const scheduledFor = nextOccurrence(s.reminderTime);
     try {
-      await saveRecord({ id: crypto.randomUUID(), kind: "closure", createdAt: new Date().toISOString(), reminderTime: s.reminderTime, tomorrow: tomorrowItems, waiting: waitingItems });
-    } catch { /* localStorage still preserves the active demo */ }
+      await saveRecord({
+        id: crypto.randomUUID(),
+        kind: "closure",
+        createdAt: new Date().toISOString(),
+        reminderTime: s.reminderTime,
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        scheduledFor: scheduledFor.toISOString(),
+        status: "scheduled",
+        tomorrow: tomorrowItems,
+        waiting: waitingItems,
+      });
+      if ("Notification" in window && Notification.permission === "default")
+        void Notification.requestPermission();
+    } catch {
+      set({ dataNotice: "交接未写入 IndexedDB，但当前页面内容仍已保留。" });
+    }
     set({ stage: "CLOSURE_COMMIT" });
+    setBusy(false);
   };
   const startWind = () =>
     set({ stage: "WIND_DOWN", windDownEndsAt: Date.now() + 1800000 });
   const sealEmotion = async (
     retention: "reveal_tomorrow" | "release_tonight",
   ) => {
-    const summary =
-      retention === "reveal_tomorrow" ? summarizeEmotion(s.emotionText) : null;
+    if (busy) return;
+    setBusy(true);
+    const summary = retention === "reveal_tomorrow" ? await emotionApi.process(s.emotionText) : null;
     try {
-      await saveRecord({ id: crypto.randomUUID(), kind: "emotion", createdAt: new Date().toISOString(), retention, summary, status: retention === "reveal_tomorrow" ? "sealed" : "released" });
-    } catch { /* localStorage still preserves the active demo */ }
+      await saveRecord({
+        id: crypto.randomUUID(),
+        kind: "emotion",
+        createdAt: new Date().toISOString(),
+        revealAt: retention === "reveal_tomorrow" ? nextOccurrence(s.reminderTime).toISOString() : undefined,
+        retention,
+        summary,
+        status: retention === "reveal_tomorrow" ? "sealed" : "released",
+      });
+    } catch {
+      set({ dataNotice: "情绪瓶未写入 IndexedDB，但当前页面内容仍已保留。" });
+    }
     set({
       emotionRetention: retention,
       emotionSummary: summary,
@@ -180,6 +228,26 @@ export default function App() {
       stage: "WIND_DOWN",
       windDownEndsAt: Date.now() + 1800000,
     });
+    setBusy(false);
+  };
+  const openMorning = async () => {
+    setBusy(true);
+    try {
+      const handoff = await loadMorningHandoff(new Date(), true);
+      if (handoff.closure || handoff.emotion) {
+        set({
+          stage: "TOMORROW_DESK", mode: handoff.closure ? "closure" : "emotion", demoMorning: true,
+          closure: handoff.closure ? { completed: [], tomorrow: handoff.closure.tomorrow, waiting: handoff.closure.waiting, released: [], needsChoice: [], closureMessage: "昨晚的交接已到达。" } : null,
+          emotionRetention: handoff.emotion ? "reveal_tomorrow" : null,
+          emotionSummary: handoff.emotion?.summary || null,
+          dataNotice: "演示时间已推进到明早，数据来自 IndexedDB。",
+        });
+      } else {
+        set({ stage: "TOMORROW_DESK", mode: "closure", demoMorning: true,
+          closure: analyzeClosure(closureDemo), emotionRetention: "reveal_tomorrow",
+          emotionSummary: summarizeEmotion(emotionDemo), dataNotice: "暂无昨晚记录，当前展示标注过的示例数据。" });
+      }
+    } finally { setBusy(false); }
   };
   const addCapture = () => {
     if (!capture.trim()) return;
@@ -216,6 +284,7 @@ export default function App() {
         </div>
       </header>
       <main>
+        {s.dataNotice && <div className="data-notice" role="status"><span>{s.dataNotice}</span><button onClick={() => set({ dataNotice: null })} aria-label="关闭提示"><X /></button></div>}
         {s.stage === "ENTRY" && (
           <EntryStage
             onChoose={(mode) =>
@@ -224,16 +293,7 @@ export default function App() {
                 stage: mode === "closure" ? "CLOSURE_CAPTURE" : "EMOTION_READY",
               })
             }
-            onMorning={() =>
-              set({
-                stage: "TOMORROW_DESK",
-                mode: "closure",
-                demoMorning: true,
-                closure: analyzeClosure(closureDemo),
-                emotionRetention: "reveal_tomorrow",
-                emotionSummary: summarizeEmotion(emotionDemo),
-              })
-            }
+            onMorning={openMorning}
           />
         )}
         {s.stage === "CLOSURE_CAPTURE" && (
@@ -268,7 +328,7 @@ export default function App() {
             )}
             <button
               className="primary"
-              disabled={!s.closureText.trim()}
+              disabled={!s.closureText.trim() || busy}
               onClick={analyze}
             >
               整理今天 <ArrowRight />
@@ -360,7 +420,7 @@ export default function App() {
             />
             <button
               className="primary"
-              disabled={!choiceResolved}
+              disabled={!choiceResolved || busy}
               onClick={commitClosure}
             >
               一键结束今天 <ArrowRight />
@@ -384,7 +444,9 @@ export default function App() {
                 <b>{waitingItems.length}</b> 等待后续
               </span>
             </div>
-            <p className="commit-reminder"><Clock3 /> 明早 {s.reminderTime} 查看交接</p>
+            <p className="commit-reminder">
+              <Clock3 /> 明早 {s.reminderTime} 查看交接
+            </p>
             <button className="primary pale" onClick={startWind}>
               进入安静时间 <Moon />
             </button>
@@ -530,7 +592,7 @@ export default function App() {
             <p>屏幕可以留在这里。明天的事，明天再打开。</p>
             <button
               className="morning-link"
-              onClick={() => set({ stage: "TOMORROW_DESK", demoMorning: true })}
+              onClick={openMorning}
             >
               演示第二天早晨 <Sun />
             </button>
@@ -569,10 +631,10 @@ function EntryStage({
   onMorning: () => void;
 }) {
   return (
-      <section className="entry stage-in">
-        <div className="entry-copy">
-          <h1>
-            今天准备
+    <section className="entry stage-in">
+      <div className="entry-copy">
+        <h1>
+          今天准备
           <br />
           结束了吗？
         </h1>
@@ -699,7 +761,19 @@ function ClosureGroup({
           <Check />
           <div>
             <b>{item.text}</b>
-          {item.detail && onDetailChange ? <label className="next-action"><span>明天第一步</span><input value={item.detail} onChange={(event) => onDetailChange(item.id, event.target.value)} /></label> : item.detail && <small>{item.detail}</small>}
+            {item.detail && onDetailChange ? (
+              <label className="next-action">
+                <span>明天第一步</span>
+                <input
+                  value={item.detail}
+                  onChange={(event) =>
+                    onDetailChange(item.id, event.target.value)
+                  }
+                />
+              </label>
+            ) : (
+              item.detail && <small>{item.detail}</small>
+            )}
           </div>
           <button
             onClick={() => onRemove(item.id)}

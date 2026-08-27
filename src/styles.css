@@ -148,6 +148,32 @@ main {
   place-items: center;
   padding: 100px 24px 84px;
 }
+.data-notice {
+  position: fixed;
+  z-index: 8;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% - 40px), 620px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: #1b292e;
+  color: #cbd4d1;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  font-size: 13px;
+}
+.data-notice button {
+  border: 0;
+  padding: 2px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.data-notice svg { display: block; width: 16px; }
 section {
   width: min(100%, 780px);
 }
@@ -618,6 +644,19 @@ textarea:focus-visible {
   font: 500 28px/1 "Barlow Condensed";
   margin-bottom: 7px;
 }
+.commit-reminder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #7f8f91;
+  font-size: 12px;
+  margin: -16px 0 30px;
+}
+.commit-reminder svg {
+  width: 15px;
+  color: var(--amber);
+}
 .emotion-ready {
   position: relative;
 }
@@ -768,6 +807,16 @@ textarea:focus-visible {
   color: #152127;
   cursor: pointer;
 }
+.voice-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.voice-demo {
+  border: 1px solid #3a4a50;
+  border-radius: 14px;
+  padding: 14px 18px;
+  background: transparent;
+  color: #aab6b5;
+  cursor: pointer;
+}
+.voice-processing { color: #c5cecb; }
 .voice-start svg,
 .voice-stop svg {
   width: 18px;
@@ -973,6 +1022,9 @@ textarea:focus-visible {
   display: block;
   font-weight: 500;
 }
+.morning-item b,
+.closure-row b,
+.question-row p { overflow-wrap: anywhere; }
 .morning-item small {
   display: block;
   color: #647173;
@@ -1165,6 +1217,8 @@ textarea:focus-visible {
   .reminder {
     margin-top: 34px;
   }
+  .data-notice { top: 60px; font-size: 12px; }
+  button, input[type="time"] { min-height: 44px; }
 }
 @media (prefers-reduced-motion: reduce) {
   *,
