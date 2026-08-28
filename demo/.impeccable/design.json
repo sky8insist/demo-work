@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-27T17:18:49.1839581Z",
+  "title": "Design System: Last30 V3",
+  "extensions": {
+    "colorMeta": {
+      "night-ink": { "role": "neutral", "displayName": "Night Ink", "canonical": "#090d0d", "tonalRamp": ["oklch(15% 0.008 180)", "oklch(24% 0.008 180)", "oklch(35% 0.008 180)", "oklch(47% 0.007 180)", "oklch(59% 0.006 180)", "oklch(71% 0.005 180)", "oklch(84% 0.004 180)", "oklch(95% 0.003 180)"] },
+      "deep-surface": { "role": "neutral", "displayName": "Deep Surface", "canonical": "#121817", "tonalRamp": ["oklch(15% 0.012 174)", "oklch(24% 0.012 174)", "oklch(35% 0.011 174)", "oklch(47% 0.010 174)", "oklch(59% 0.009 174)", "oklch(71% 0.008 174)", "oklch(84% 0.006 174)", "oklch(95% 0.004 174)"] },
+      "raised-surface": { "role": "neutral", "displayName": "Raised Surface", "canonical": "#1a2220", "tonalRamp": ["oklch(15% 0.016 170)", "oklch(24% 0.016 170)", "oklch(35% 0.015 170)", "oklch(47% 0.014 170)", "oklch(59% 0.012 170)", "oklch(71% 0.010 170)", "oklch(84% 0.007 170)", "oklch(95% 0.004 170)"] },
+      "paper-cream": { "role": "neutral", "displayName": "Paper Cream", "canonical": "#eef0e9", "tonalRamp": ["oklch(15% 0.012 120)", "oklch(24% 0.012 120)", "oklch(35% 0.011 120)", "oklch(47% 0.010 120)", "oklch(59% 0.009 120)", "oklch(71% 0.008 120)", "oklch(84% 0.007 120)", "oklch(95% 0.006 120)"] },
+      "quiet-text": { "role": "neutral", "displayName": "Quiet Text", "canonical": "#9aa7a2", "tonalRamp": ["oklch(15% 0.018 170)", "oklch(24% 0.018 170)", "oklch(35% 0.017 170)", "oklch(47% 0.016 170)", "oklch(59% 0.015 170)", "oklch(71% 0.013 170)", "oklch(84% 0.009 170)", "oklch(95% 0.005 170)"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#2a3532", "tonalRamp": ["oklch(15% 0.016 170)", "oklch(24% 0.016 170)", "oklch(35% 0.015 170)", "oklch(47% 0.014 170)", "oklch(59% 0.012 170)", "oklch(71% 0.010 170)", "oklch(84% 0.007 170)", "oklch(95% 0.004 170)"] },
+      "ember": { "role": "primary", "displayName": "Ember Light", "canonical": "#efa95a", "tonalRamp": ["oklch(15% 0.075 64)", "oklch(24% 0.105 64)", "oklch(35% 0.135 64)", "oklch(47% 0.155 64)", "oklch(59% 0.165 64)", "oklch(71% 0.155 64)", "oklch(84% 0.105 64)", "oklch(95% 0.035 64)"] },
+      "sage": { "role": "secondary", "displayName": "Quiet Sage", "canonical": "#94bda8", "tonalRamp": ["oklch(15% 0.035 158)", "oklch(24% 0.050 158)", "oklch(35% 0.065 158)", "oklch(47% 0.075 158)", "oklch(59% 0.080 158)", "oklch(71% 0.075 158)", "oklch(84% 0.050 158)", "oklch(95% 0.020 158)"] },
+      "bottle-lilac": { "role": "tertiary", "displayName": "Bottle Lilac", "canonical": "#b9a7df", "tonalRamp": ["oklch(15% 0.055 300)", "oklch(24% 0.075 300)", "oklch(35% 0.095 300)", "oklch(47% 0.110 300)", "oklch(59% 0.120 300)", "oklch(71% 0.110 300)", "oklch(84% 0.075 300)", "oklch(95% 0.025 300)"] },
+      "safety-coral": { "role": "tertiary", "displayName": "Safety Coral", "canonical": "#ffc2b8", "tonalRamp": ["oklch(15% 0.055 25)", "oklch(24% 0.080 25)", "oklch(35% 0.105 25)", "oklch(47% 0.125 25)", "oklch(59% 0.135 25)", "oklch(71% 0.125 25)", "oklch(84% 0.085 25)", "oklch(95% 0.030 25)"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Soft Display", "purpose": "Stage-defining questions, receipts, completion statements, and the wind-down clock." },
+      "headline": { "displayName": "Mechanism Headline", "purpose": "The current open loop and focused mechanism prompts." },
+      "title": { "displayName": "Editorial Title", "purpose": "Branch questions, bottle messages, and compact statements." },
+      "body": { "displayName": "Quiet Body", "purpose": "Explanatory copy and long-form expression with generous leading." },
+      "label": { "displayName": "Ledger Label", "purpose": "Counts, status, dates, wordmark details, and operational metadata." }
+    },
+    "shadows": [
+      { "name": "action-lift", "value": "0 15px 38px rgba(0,0,0,.28)", "purpose": "Lift beneath the primary ember action." },
+      { "name": "paper-lift", "value": "0 25px 80px rgba(0,0,0,.36)", "purpose": "Physical elevation of the Closure capture sheet." },
+      { "name": "object-lift", "value": "0 30px 70px rgba(0,0,0,.34)", "purpose": "Outer depth beneath the Emotion Bottle glass body." },
+      { "name": "popover-lift", "value": "0 18px 54px rgba(0,0,0,.46)", "purpose": "Floating depth for the ambient track selector." },
+      { "name": "transfer-lift", "value": "0 24px 70px rgba(0,0,0,.52)", "purpose": "Temporary depth while an open loop moves into the Closure Map." }
+    ],
+    "motion": [
+      { "name": "state-reveal", "value": "780ms expo.out", "purpose": "Stage entry through fade, 22px rise, and clip reveal." },
+      { "name": "control-response", "value": "200ms ease", "purpose": "Hover lift, brightness, and surface transitions." },
+      { "name": "branch-enter", "value": "450ms cubic-bezier(.16,1,.3,1)", "purpose": "Focused Closure branch reveal with a short rise and blur resolve." },
+      { "name": "map-arrive", "value": "550ms cubic-bezier(.16,1,.3,1)", "purpose": "New ledger item arrival from the active workbench." },
+      { "name": "record-spin", "value": "10s linear infinite", "purpose": "Continuous vinyl rotation only while ambient audio plays." },
+      { "name": "liquid-sway", "value": "2s–2.7s ease-in-out alternate", "purpose": "Low-amplitude liquid motion while the bottle is receiving expression." },
+      { "name": "reduced-motion", "value": "0.01ms single iteration", "purpose": "Preserve state equivalence while removing continuous or spatial animation." }
+    ],
+    "breakpoints": [
+      { "name": "stack", "value": "850px" },
+      { "name": "compact", "value": "600px" },
+      { "name": "ambient-compact", "value": "640px" },
+      { "name": "minimum-supported", "value": "320px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Ember Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The singular forward action for a stage, warm and physically lifted.",
+      "html": "<button class=\"ds-btn-primary\">开始逐项收尾 <span aria-hidden=\"true\">→</span></button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:18px;border:0;border-radius:14px;padding:16px 22px 16px 25px;background:var(--ember,#efa95a);color:#171a18;font:700 17px/1.2 'Microsoft YaHei','PingFang SC',sans-serif;cursor:pointer;box-shadow:0 15px 38px rgba(0,0,0,.28);transition:transform .2s ease,filter .2s ease}.ds-btn-primary:hover{transform:translateY(-2px);filter:brightness(1.05)}.ds-btn-primary:focus-visible{outline:2px solid #fff;outline-offset:4px}.ds-btn-primary:active{transform:translateY(0)}.ds-btn-primary:disabled{opacity:.28;cursor:not-allowed;transform:none}"
+    },
+    {
+      "name": "Closure Option",
+      "kind": "button",
+      "refersTo": "button-option",
+      "description": "A compact editorial choice that routes one open loop without dashboard chrome.",
+      "html": "<button class=\"ds-option\"><span><b>还没想清下一步</b><small>把它编译成一个可开始的动作</small></span><span aria-hidden=\"true\">→</span></button>",
+      "css": ".ds-option{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;border:0;border-radius:12px;background:#171e1c;color:var(--cream,#eef0e9);padding:16px;text-align:left;cursor:pointer;transition:background .2s,transform .2s}.ds-option b{display:block;font:600 14px/1.3 'Microsoft YaHei','PingFang SC',sans-serif}.ds-option small{display:block;margin-top:5px;color:#74817d;font:400 11px/1.4 'Microsoft YaHei','PingFang SC',sans-serif}.ds-option:hover{background:#202a27;transform:translateY(-2px)}.ds-option:focus-visible{outline:2px solid #fff;outline-offset:4px}.ds-option:active{transform:translateY(0)}"
+    },
+    {
+      "name": "Closure Paper Capture",
+      "kind": "input",
+      "refersTo": "input-paper",
+      "description": "A pale sheet for an unstructured sweep of unfinished work.",
+      "html": "<div class=\"ds-paper\"><textarea aria-label=\"今天还没有结束的事\" placeholder=\"一件一行，或者直接写一段……\"></textarea><div><button>填入演示案例</button><span>0 / 1200</span></div></div>",
+      "css": ".ds-paper{overflow:hidden;border-radius:16px 16px 10px 10px;background:#e7e6dc;color:#1d2523;box-shadow:0 25px 80px rgba(0,0,0,.36)}.ds-paper textarea{display:block;width:100%;height:220px;resize:vertical;border:0;background:transparent;color:#1d2523;padding:30px 32px;font:400 18px/1.8 'Microsoft YaHei','PingFang SC',sans-serif;caret-color:#b96827}.ds-paper textarea::placeholder{color:#78817d}.ds-paper textarea:focus-visible{outline:3px solid var(--ember,#efa95a);outline-offset:-5px;border-radius:10px}.ds-paper>div{display:flex;justify-content:space-between;align-items:center;padding:13px 18px;border-top:1px solid #c9cbc2;color:#767d79;font:400 12px/1.2 'Microsoft YaHei','PingFang SC',sans-serif}.ds-paper button{border:0;background:none;color:#5d655f;text-decoration:underline;text-underline-offset:4px;cursor:pointer}.ds-paper button:focus-visible{outline:2px solid #171a18;outline-offset:2px}"
+    },
+    {
+      "name": "Closure Map Item",
+      "kind": "card",
+      "refersTo": "card-map-item",
+      "description": "The compact landed state of a loop after physical transfer into a named lane.",
+      "html": "<section class=\"ds-map-lane\"><header><span class=\"ds-map-icon\" aria-hidden=\"true\">☀</span><span>明天</span><b>1</b></header><p>确认方案的第一个可开始动作</p></section>",
+      "css": ".ds-map-lane{width:260px;color:#84918d;font:400 12px/1.4 'Microsoft YaHei','PingFang SC',sans-serif}.ds-map-lane header{display:flex;align-items:center;gap:9px;margin-bottom:8px}.ds-map-lane header b{margin-left:auto;color:#cbd2ce}.ds-map-icon{color:var(--ember,#efa95a)}.ds-map-lane p{margin:0;padding:10px 12px;border-radius:9px;background:#151c1a;color:#bdc6c2;transition:background .2s ease}.ds-map-lane:hover p{background:#1a2220}.ds-map-lane:focus-within{outline:2px solid #fff;outline-offset:4px}"
+    },
+    {
+      "name": "Emotion Mode Toggle",
+      "kind": "chip",
+      "description": "A restrained two-mode selector for writing or mock voice pour.",
+      "html": "<div class=\"ds-modes\" role=\"group\" aria-label=\"表达方式\"><button class=\"ds-mode active\">✎ 写下来</button><button class=\"ds-mode\">◉ 说出来</button></div>",
+      "css": ".ds-modes{display:flex;gap:4px}.ds-mode{border:0;border-radius:9px;background:transparent;color:#7d8985;padding:9px 12px;font:400 14px/1.2 'Microsoft YaHei','PingFang SC',sans-serif;cursor:pointer;transition:background .2s,color .2s}.ds-mode.active,.ds-mode:hover{background:#202824;color:#e8ebe5}.ds-mode:focus-visible{outline:2px solid #fff;outline-offset:4px}.ds-mode:active{background:#171e1c}"
+    },
+    {
+      "name": "Emotion Finish Action",
+      "kind": "button",
+      "refersTo": "button-emotion",
+      "description": "The lilac commitment that ends expression and begins sealing.",
+      "html": "<button class=\"ds-btn-emotion\">说完了</button>",
+      "css": ".ds-btn-emotion{border:0;border-radius:12px;background:var(--lilac,#b9a7df);color:#211c2c;padding:14px 22px;font:700 17px/1.2 'Microsoft YaHei','PingFang SC',sans-serif;cursor:pointer;transition:transform .2s ease,filter .2s ease}.ds-btn-emotion:hover{transform:translateY(-2px);filter:brightness(1.04)}.ds-btn-emotion:focus-visible{outline:2px solid #fff;outline-offset:4px}.ds-btn-emotion:active{transform:translateY(0)}.ds-btn-emotion:disabled{opacity:.25;transform:none}"
+    },
+    {
+      "name": "Morning Bottle Card",
+      "kind": "card",
+      "refersTo": "card-morning-bottle",
+      "description": "The locked emotion object returning as a tactile morning reveal action.",
+      "html": "<button class=\"ds-morning-bottle\"><span class=\"ds-flask\" aria-hidden=\"true\">♧</span><span>昨晚的情绪瓶</span><b>可以打开了</b><i aria-hidden=\"true\">→</i></button>",
+      "css": ".ds-morning-bottle{width:300px;display:grid;grid-template-columns:42px 1fr 20px;gap:12px;align-items:center;border:0;border-radius:16px;background:#211d2d;color:#eeeaf5;padding:20px;text-align:left;cursor:pointer;transition:transform .2s ease,background .2s ease}.ds-flask{grid-row:1/3;color:var(--lilac,#b9a7df);font-size:34px}.ds-morning-bottle span:not(.ds-flask){font:400 12px/1.2 'Microsoft YaHei','PingFang SC',sans-serif;color:#968cac}.ds-morning-bottle b{grid-column:2;font:400 21px/1.2 'Smiley Sans','Microsoft YaHei',sans-serif}.ds-morning-bottle i{grid-column:3;grid-row:1/3;font-style:normal}.ds-morning-bottle:hover{transform:translateY(-2px);background:#292338}.ds-morning-bottle:focus-visible{outline:2px solid #fff;outline-offset:4px}.ds-morning-bottle:active{transform:translateY(0)}"
+    },
+    {
+      "name": "Ambient Record",
+      "kind": "nav",
+      "description": "The persistent shared audio object, visible but subordinate in every core flow.",
+      "html": "<div class=\"ds-record-wrap\"><button class=\"ds-vinyl-button\" aria-label=\"暂停环境音乐\"><span class=\"ds-vinyl\"><i></i></span><span class=\"ds-play\">Ⅱ</span></button><button class=\"ds-track-trigger\" aria-label=\"选择环境音乐\">•••</button></div>",
+      "css": ".ds-record-wrap{position:relative;width:58px;height:58px}.ds-vinyl-button{position:absolute;inset:0;border:0;background:transparent;color:var(--cream,#eef0e9);padding:0;cursor:pointer}.ds-vinyl{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:repeating-radial-gradient(circle,#20211f 0 4px,#111210 5px 8px);box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .2s}.ds-vinyl:before{content:'';width:14px;height:14px;border-radius:50%;background:var(--ember,#efa95a);box-shadow:inset 0 0 0 4px #2a211a}.ds-vinyl i{position:absolute;width:3px;height:3px;border-radius:50%;background:#080908}.ds-play{position:absolute;inset:0;display:grid;place-items:center;opacity:0;background:rgba(6,9,9,.55);border-radius:50%;transition:opacity .2s}.ds-vinyl-button:hover .ds-play,.ds-vinyl-button:focus-visible .ds-play{opacity:1}.ds-vinyl-button:focus-visible,.ds-track-trigger:focus-visible{outline:2px solid #fff;outline-offset:4px;border-radius:50%}.ds-vinyl-button:active .ds-vinyl{transform:scale(.95)}.ds-track-trigger{position:absolute;right:-7px;bottom:-9px;width:24px;height:24px;border:0;border-radius:50%;background:#272b28;color:#c8cec7;display:grid;place-items:center;font-size:9px;cursor:pointer}.ds-track-trigger:hover{background:#323733}"
+    },
+    {
+      "name": "Emotion Bottle",
+      "kind": "custom",
+      "description": "The dominant tactile vessel whose cap, glass, liquid, and label carry the Emotion flow.",
+      "html": "<button class=\"ds-bottle\" aria-label=\"打开情绪瓶\"><span class=\"ds-cap\"><i></i><i></i><i></i></span><span class=\"ds-neck\"></span><span class=\"ds-body\"><span class=\"ds-liquid\"></span><span class=\"ds-glint\"></span><span class=\"ds-label\">LAST<br><b>30</b></span></span></button>",
+      "css": ".ds-bottle{position:relative;width:186px;height:336px;border:0;background:transparent;padding:0;color:inherit;cursor:pointer}.ds-cap{position:absolute;z-index:4;top:6px;left:61px;width:64px;height:43px;border-radius:8px 8px 5px 5px;background:#c8c1b6;box-shadow:inset 0 -7px 11px rgba(61,50,42,.22),0 9px 15px rgba(0,0,0,.3);display:flex;justify-content:center;gap:6px;padding-top:10px;transition:transform .78s cubic-bezier(.16,1,.3,1)}.ds-cap i{height:22px;width:2px;background:rgba(68,61,53,.23)}.ds-neck{position:absolute;z-index:2;top:37px;left:67px;width:53px;height:57px;border:1px solid rgba(220,230,224,.45);border-bottom:0;border-radius:6px 6px 0 0;background:rgba(110,139,129,.12)}.ds-body{position:absolute;z-index:1;left:14px;top:79px;width:157px;height:234px;border:1px solid rgba(220,230,224,.42);border-radius:45px 45px 30px 30px/35px 35px 24px 24px;overflow:hidden;background:linear-gradient(125deg,rgba(214,228,220,.14),rgba(59,82,74,.1) 45%,rgba(236,241,237,.11));box-shadow:inset 12px 0 18px rgba(255,255,255,.035),inset -16px -12px 24px rgba(0,0,0,.15),0 18px 42px rgba(0,0,0,.34);transition:transform .7s ease}.ds-liquid{position:absolute;left:-5%;right:-5%;bottom:-5px;height:52%;border-radius:50% 50% 0 0/12% 12% 0 0;background:linear-gradient(180deg,rgba(185,167,223,.62),rgba(99,78,145,.72))}.ds-glint{position:absolute;left:18px;top:27px;width:9px;height:126px;border-radius:50%;background:rgba(255,255,255,.12);filter:blur(1px)}.ds-label{position:absolute;z-index:3;left:45px;top:89px;width:66px;padding:11px 5px;border-top:1px solid rgba(239,240,233,.42);border-bottom:1px solid rgba(239,240,233,.42);font:600 8px/1.25 Arial,sans-serif;letter-spacing:.2em;color:rgba(239,240,233,.72)}.ds-label b{color:var(--lilac,#b9a7df)}.ds-bottle:hover .ds-cap{transform:translateY(-10px) rotate(3deg)}.ds-bottle:hover .ds-body{transform:scale(1.02)}.ds-bottle:focus-visible{outline:2px solid #fff;outline-offset:4px;border-radius:75px}.ds-bottle:active .ds-cap{transform:translateY(-18px) rotate(6deg)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Last-Lit Worktable",
+    "overview": "Last30 feels like a single worktable left under one warm light after the rest of the room has gone dark. The world is quiet, spacious, and materially specific: charcoal air, pale paper, a translucent bottle, a small spinning record, and restrained glints of ember, sage, and lilac. Large human headlines provide reassurance while compact operational labels keep the interface legible without sounding managerial.\n\nMechanism is the identity. Day Closure is an editorial operational workbench where one open loop is physically transferred into Done, Tomorrow, Waiting, or Release. Emotion Bottle is not a recolored form: the bottle dominates the scene and the sequence is explicitly open, pour, seal, lock, and reveal. Only the ambient record, night field, typography, and foundational palette belong to both paths.",
+    "keyCharacteristics": [
+      "Low-stimulus charcoal night with rare, meaningful color.",
+      "Large soft display type paired with compact operational labels.",
+      "Physical state change communicates progress more than explanatory chrome.",
+      "Closure uses paper, lanes, hairlines, and transfer; Emotion uses glass, liquid, cap, and lock.",
+      "Persistent ambient music behaves like an object in the room, not a media toolbar."
+    ],
+    "rules": [
+      { "name": "The One Warm Light Rule", "body": "Ember marks the next meaningful action or active state; it must remain scarce enough to feel like the only lamp in the room.", "section": "colors" },
+      { "name": "The Mechanism Color Rule", "body": "Sage belongs to operational closure and lilac belongs to emotional containment. Do not flatten the two paths into one generic accent system.", "section": "colors" },
+      { "name": "The Whisper and Ledger Rule", "body": "Headlines may be large and soft; labels stay small, tracked, and exact. Avoid adding medium-weight dashboard headings between them.", "section": "typography" },
+      { "name": "The One Mechanism Per Field Rule", "body": "Every stage gives one operative object—the open loop, paper sheet, map, bottle, or clock—the dominant area and leaves the rest as quiet context.", "section": "layout" },
+      { "name": "The Physical Shadow Rule", "body": "A shadow indicates an object that can be lifted, opened, moved, or placed; ordinary information surfaces remain tonal and flat.", "section": "elevation" },
+      { "name": "The Silhouette Before Decoration Rule", "body": "Signature objects must remain recognizable from shape and state alone; gradients, glints, and color only reinforce the silhouette.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do keep the charcoal night field continuous across stages and preserve generous empty space.",
+      "Do let Closure communicate through paper, lanes, coverage, and physical transfer into Done, Tomorrow, Waiting, or Release.",
+      "Do let Emotion communicate through the dominant bottle and its open, pour, seal, lock, and reveal states.",
+      "Do reserve ember, sage, lilac, and safety coral for their implemented semantic roles.",
+      "Do preserve visible keyboard focus, 320px support, and reduced-motion state equivalence.",
+      "Do keep the ambient record persistent and visually subordinate to the current mechanism."
+    ],
+    "donts": [
+      "Don't turn the interface into a dense productivity dashboard, generic form flow, or collection of equal-weight cards.",
+      "Don't convert every open loop into a Tomorrow task; Closure must visibly support Done, Waiting, and Release.",
+      "Don't merge Closure and Emotion into the same input-and-analysis template or share their signature visual materials.",
+      "Don't add mood scores, diagnostic visualization, or continuous analysis while the user is expressing emotion.",
+      "Don't use bright gradients, large saturated color fields, ornamental glow, or gratuitous motion in this low-stimulus night environment."
+    ]
+  }
+}

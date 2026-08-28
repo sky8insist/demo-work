@@ -1,0 +1,35 @@
+.ambient-record {
+  left: 0;
+  right: auto;
+  top: 0;
+  touch-action: none;
+  will-change: transform;
+}
+.record-drag-handle {
+  position: absolute;
+  z-index: 4;
+  left: -12px;
+  top: -12px;
+  width: 25px;
+  height: 25px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: #202622;
+  color: #98a39f;
+  padding: 0;
+  cursor: grab;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .3);
+  transition: color .18s ease, background .18s ease, transform .18s ease;
+}
+.record-drag-handle:hover { color: var(--cream); background: #2b332f; transform: scale(1.06); }
+.record-drag-handle:active { cursor: grabbing; transform: scale(.94); }
+.record-drag-handle svg { width: 13px; }
+.ambient-record.near-left .track-popover { left: 0; right: auto; }
+.ambient-record.near-bottom .track-popover { top: auto; bottom: 70px; }
+@media (max-width: 640px) {
+  .ambient-record { left: 0; right: auto; top: 0; width: 54px; height: 54px; transform-origin: initial; }
+  .vinyl { width: 50px; height: 50px; }
+  .ambient-record.near-bottom .track-popover { top: auto; bottom: 66px; }
+}
