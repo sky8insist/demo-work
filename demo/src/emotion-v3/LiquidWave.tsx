@@ -1,0 +1,3 @@
+export function LiquidWave({ active = false }: { active?: boolean }) {
+  return <div className={`liquid-wave ${active ? "is-active" : ""}`} aria-hidden="true"><svg viewBox="0 0 240 300" preserveAspectRatio="none"><defs><linearGradient id="liquid" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#b9a7df" stopOpacity=".86"/><stop offset="1" stopColor="#544675" stopOpacity=".96"/></linearGradient></defs><path d="M0 122 Q30 102 60 122 T120 122 T180 122 T240 122 V300 H0Z" fill="url(#liquid)"/><path d="M0 128 Q35 108 70 128 T140 128 T210 128 T280 128" fill="none" stroke="#eee8ff" strokeOpacity=".55" strokeWidth="2"/></svg></div>;
+}

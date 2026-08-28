@@ -1,0 +1,13 @@
+{
+  "name": "Dayend",
+  "short_name": "Dayend",
+  "description": "结束今天，把值得的事交给明天。",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#071116",
+  "theme_color": "#071116",
+  "lang": "zh-CN",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
